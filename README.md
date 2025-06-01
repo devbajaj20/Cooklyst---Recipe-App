@@ -6,7 +6,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/devbajaj20/Cooklyst---Recipe-App?style=social)](https://github.com/devbajaj20/Cooklyst---Recipe-App/stargazers)
 
 <div align="center">
-![Home Page](static/uploads/homepage.png)
+![Home Page](https://raw.githubusercontent.com/<username>/<repo>/main/static/uploads/homepage.png)
 </div>
 
 ## 📝 Overview
