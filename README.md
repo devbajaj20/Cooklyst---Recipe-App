@@ -6,7 +6,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/devbajaj20/Cooklyst---Recipe-App?style=social)](https://github.com/devbajaj20/Cooklyst---Recipe-App/stargazers)
 
 <div align="center">
-![Home Page](https://raw.githubusercontent.com/<username>/<repo>/main/static/uploads/homepage.png)
+  <img src="static/uploads/homepage.png" alt="Cooklyst Homepage" width="800px"/>
 </div>
 
 ## 📝 Overview
@@ -44,7 +44,7 @@ Cooklyst is a modern web application for sharing and discovering recipes, built 
 
 ### Home Page
 <div align="center">
-  <img src="static/uploads/home-screenshot.png" alt="Home Page" width="600px"/>
+  <img src="static/uploads/homepage.png" alt="Home Page" width="600px"/>
 </div>
 
 ### Recipe Details
