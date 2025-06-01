@@ -6,7 +6,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/devbajaj20/Cooklyst---Recipe-App?style=social)](https://github.com/devbajaj20/Cooklyst---Recipe-App/stargazers)
 
 <div align="center">
-  <img src="static/uploads/Screenshot 2025-06-01 190921.png" alt="Home Page" width="600px"/>
+  <img src="{{ url_for('static', filename='uploads/Screenshot 2025-06-01 190921.png') }}" alt="Home Page" width="600px"/>
 </div>
 
 ## 📝 Overview
