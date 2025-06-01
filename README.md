@@ -6,7 +6,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/devbajaj20/Cooklyst---Recipe-App?style=social)](https://github.com/devbajaj20/Cooklyst---Recipe-App/stargazers)
 
 <div align="center">
-  <img src="static/uploads/recipe-banner.jpg" alt="Cooklyst Banner" width="800px"/>
+![Home Page](https://raw.githubusercontent.com/<username>/<repo>/main/static/uploads/homepage.png)
 </div>
 
 ## 📝 Overview
@@ -113,42 +113,6 @@ Cooklyst---Recipe-App/
     └── ...
 ```
 
-## 💡 Features in Detail
-
-### 👤 User Management
-- User registration and login
-- Profile customization
-- Password management
-- User dashboard
-
-### 📝 Recipe Management
-- Create new recipes with images
-- Edit existing recipes
-- Delete recipes
-- View recipe details
-- Recipe categories and tags
-
-### 🤝 Social Features
-- Save favorite recipes
-- View other users' profiles
-- Browse recipe collections
-- Share recipes on social media
-
-### 🔍 Search and Filter
-- Search recipes by name
-- Filter by categories
-- Sort by various criteria
-- Advanced search options
-
-## 🤝 Contributing
-
-We welcome contributions! Please follow these steps:
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ## 📄 License
 
@@ -156,12 +120,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Contact
 
-Divya Bajaj - [@devbajaj20](https://github.com/devbajaj20)
-
 Project Link: [https://github.com/devbajaj20/Cooklyst---Recipe-App](https://github.com/devbajaj20/Cooklyst---Recipe-App)
 
 ---
 
-<div align="center">
-  <sub>Built with ❤️ by Divya Bajaj</sub>
-</div>
