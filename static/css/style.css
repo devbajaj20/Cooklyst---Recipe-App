@@ -1,0 +1,121 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.nav-link:hover {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+
+.text-orange {
+    color: #f28c28;
+}
+
+.alert {
+    border-radius: 8px;
+}
+
+.recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.recipe-card {
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.recipe-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.recipe-card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.recipe-actions .btn {
+    width: 45%;
+    font-size: 0.9rem;
+    padding: 0.6rem;
+    text-align: center;
+}
+
+.recipe-actions .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.alert-info {
+    margin-top: 2rem;
+    font-size: 1.1rem;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 230px;
+}
+
+/* Card container enhancements */
+.box {
+    transition: transform 0.3s ease;
+    flex: 1 1 300px;
+    background: #000000; /* dark background */
+    border-radius: 10px;
+    border: 3px solid #d5cee0; /* light border */
+    text-align: center;
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+    color: #e0e0e0;
+    overflow: hidden;
+    min-height: 420px;
+}
+
+.box:hover {
+    transform: scale(1.03);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Image Styling */
+.box img {
+    height: 160px;
+    object-fit: cover;
+    width: 100%;
+    border: 2px solid #00bcd4; /* light blue border */
+    border-radius: 8px;
+    margin-bottom: 15px;
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Heading and paragraph */
+.box h3 {
+    color: #0dcaf0;
+    font-size: 22px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.box p {
+    color: #cfcfcf;
+    font-size: 14px;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+/* View button */
+.box .btn-outline-info {
+    font-weight: bold;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+}
+
+.box .btn-outline-info:hover {
+    background-color: #0dcaf0;
+    color: white;
+}

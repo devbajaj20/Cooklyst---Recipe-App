@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <title>Cooklyst</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        :root[data-theme='light'] {
+            --bg-color: #f9f9f9;
+            --text-color: #000;
+            --card-bg: #fff;
+            --sidebar-bg: #fff;
+            --recipe-card-bg:  #fff;
+            --border-color: #ddd;
+        }
+
+        :root[data-theme='dark'] {
+            --bg-color: #000000;
+            --text-color: #f5f5f5;
+            --card-bg: #1e1e1e;
+            --sidebar-bg: #1a1a1a;
+            --border-color: #333;
+
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            display: flex;
+        }
+
+        .search-input {
+            width: 700px;
+            padding: 12px 20px;
+            border-radius: 25px;
+            border: 1px solid #ffffff;
+            background-color: #000000;
+            color: #ded3d3;
+        }
+
+        .search-input::placeholder {
+            color: #aaa;
+        }
+
+        .btn-search {
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+
+        .recipe-card {
+            width: 400px;
+            height: 400px;
+            background-color: #000000;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 4px solid #ffffff;
+            color: white;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .recipe-img {
+            height: 220px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+        }
+
+        .btn-outline-info {
+            font-weight: 600;
+            border-radius: 4px;
+            transition: all 0.2s ease-in-out;
+            border: 2px solid #ffffff;
+            background-color: transparent;
+            color: #ffffff;
+        }
+
+        .btn-outline-info:hover {
+            background-color: #030544;
+            color: #fff;
+            border-color: #030544;
+            box-shadow: 0 0 10px #0dcaf0;
+        }
+
+        @media (max-width: 768px) {
+            .search-input {
+                width: 80%;
+            }
+
+            .btn-search {
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+
+        .sidebar {
+            width: 220px;
+            min-height: 100vh;
+            background-color: var(--sidebar-bg);
+            color: var(--text-color);
+            padding: 1rem;
+            transition: all 0.3s ease;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            border-right: 1px solid var(--border-color);
+        }
+
+        .sidebar.collapsed {
+            width: 60px;
+        }
+
+        .sidebar-title,
+        .link-text {
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .sidebar.collapsed .sidebar-title,
+        .sidebar.collapsed .link-text {
+            opacity: 0;
+            transform: translateX(-10px);
+            pointer-events: none;
+        }
+
+        .nav-link {
+            color: var(--text-color);
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        /* Positioning the button to the left of the title */
+.sidebar-title {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+
+.toggle-sidebar-btn {
+    color:#db6415;
+    font-size: 14px; /* Make the button smaller */
+    margin-right: 10px; /* Space between button and title */
+    padding: 5px; /* Optional: Adjust padding */
+    border: none; /* Optional: Remove border */
+    background-color: transparent; /* Optional: Ensure the button has no background */
+}
+
+/* Adjust the size of the icon in the button */
+.toggle-sidebar-btn i {
+    font-size: 16px; /* Reduce icon size */
+}
+
+
+        .sidebar.collapsed + .toggle-sidebar-btn {
+            left: 70px;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 2rem;
+            margin-left: 220px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .sidebar.collapsed ~ .main-content {
+            margin-left: 60px;
+        }
+
+        .topbar {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .btn-toggle-theme {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        a.text-decoration-none {
+            color: var(--text-color);
+        }
+
+        .rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+        }
+
+        .rating input[type="radio"] {
+            display: none;
+        }
+
+        .rating label {
+            font-size: 2rem;
+            color: #ccc;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .rating input[type="radio"]:checked ~ label,
+        .rating label:hover,
+        .rating label:hover ~ label {
+            color: #ffc107;
+        }
+
+  .footer {
+    background-color: #000;
+    color: #f8f9fa;
+    padding: 30px 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    text-align: center; /* Center all the text */
+}
+
+.footer .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center align all columns */
+    gap: 30px;
+}
+
+.footer .col {
+    flex: 1 1 220px;
+    min-width: 200px;
+    text-align: left; /* Align text left in each column */
+}
+
+.footer h4, .footer h5 {
+    color: #f1c40f;
+    margin-bottom: 10px;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.footer p,
+.footer a,
+.footer li {
+    color: #ccc;
+    line-height: 1.5;
+    text-decoration: none;
+    list-style: none;
+}
+
+.footer a {
+    color: #ccc;
+    transition: color 0.3s;
+}
+
+.footer a:hover {
+    color: #f1c40f;
+}
+
+.footer .contact-info li {
+    display: block;
+    margin-bottom: 8px;
+    align-items: right;
+    
+}
+
+
+.footer .credit {
+    text-align: center;
+    margin-top: 30px;
+    border-top: 1px solid #333;
+    padding-top: 15px;
+    font-size: 13px;
+    color: #aaa;
+}
+
+ /* Dark mode container */
+  .help-container {
+    background-color: #121212; /* dark background */
+    color: #e0e0e0; /* light gray text */
+    min-height: 100vh;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  /* Headings */
+  .help-container h1,
+  .help-container h3,
+  .help-container h4,
+  .help-container h5 {
+    color: #90caf9; /* soft light blue for headings */
+  }
+
+  /* Muted text */
+  .help-container .text-muted {
+    color: #aaaaaa !important; /* lighter gray for muted text */
+  }
+
+  /* Links */
+  .help-container a {
+    color: #64b5f6;
+    text-decoration: none;
+  }
+  .help-container a:hover {
+    color: #42a5f5;
+    text-decoration: underline;
+  }
+
+  /* Card */
+  .help-card {
+    background-color: #1e1e1e;
+    border: 1px solid #64b5f6;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    box-shadow: 0 0 10px rgba(100, 181, 246, 0.3);
+  }
+
+  /* Form inputs */
+  .help-card input[type="text"],
+  .help-card input[type="email"],
+  .help-card textarea {
+    background-color: #2a2a2a;
+    border: 1px solid #555;
+    color: #eee;
+    padding: 0.5rem;
+    border-radius: 0.3rem;
+    width: 100%;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .help-card input[type="text"]:focus,
+  .help-card input[type="email"]:focus,
+  .help-card textarea:focus {
+    border-color: #64b5f6;
+    box-shadow: 0 0 5px #64b5f6;
+    outline: none;
+    background-color: #333;
+    color: #fff;
+  }
+
+  /* Labels */
+  .help-card label {
+    color: #90caf9;
+    font-weight: 600;
+  }
+
+  /* Submit button */
+  .help-card button[type="submit"] {
+    background-color: #4caf50;
+    border: none;
+    padding: 0.75rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 0.3rem;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .help-card button[type="submit"]:hover {
+    background-color: #388e3c;
+  }
+
+    </style>
+</head>
+<body>
+
+
+<!-- Sidebar -->
+<div id="sidebar" class="sidebar">
+    <!-- Toggle Button -->
+    <button id="toggleSidebarBtn" class="btn btn-light toggle-sidebar-btn" title="Toggle Sidebar">
+        <i class="bi bi-chevron-left"></i>
+    </button>
+    <h4 class="sidebar-title">🧑‍🍳 Cooklyst</h4>
+    <nav class="nav flex-column mt-4">
+        <a class="nav-link" href="{{ url_for('index') }}">🏠 <span class="link-text">Home</span></a>
+        {% if current_user.is_authenticated %}
+        <a class="nav-link" href="{{ url_for('upload') }}">📤 <span class="link-text">Add Recipe</span></a>
+        <a class="nav-link" href="{{ url_for('my_progress') }}">📈 <span class="link-text">My Progress</span></a>
+        <a class="nav-link" href="{{ url_for('saved_recipes') }}">🎯 <span class="link-text">Saved Recipes</span></a>
+        <a class="nav-link" href="{{ url_for('my_recipes') }}">📋 <span class="link-text">My Recipes</span></a>
+        <a class="nav-link text-danger mt-3" href="{{ url_for('logout') }}">🚪 <span class="link-text">Logout</span></a>
+        {% else %}
+        <a class="nav-link text-primary" href="{{ url_for('login') }}">🔐 <span class="link-text">Login</span></a>
+        <a class="nav-link text-secondary" href="{{ url_for('register') }}">📝 <span class="link-text">Register</span></a>
+        {% endif %}
+    </nav>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+
+    <!-- Top Bar -->
+    <div class="topbar">
+        <div class="ms-auto d-flex align-items-center gap-3">
+            {% if current_user.is_authenticated %}
+                {% if current_user.image %}
+                    <a href="{{ url_for('profile') }}" class="d-flex align-items-center text-decoration-none fw-semibold">
+                        <img src="{{ url_for('static', filename='uploads/' + current_user.image) }}"
+                             alt="Profile"
+                             class="rounded-circle me-2"
+                             style="width: 32px; height: 32px; object-fit: cover;">
+                        {{ current_user.username }}
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('profile') }}" class="text-decoration-none fw-semibold">
+                        👤 {{ current_user.username }}
+                    </a>
+                {% endif %}
+            {% endif %}
+
+            <button class="btn-toggle-theme" onclick="toggleTheme()" title="Toggle Dark/Light Mode">🌃</button>
+        </div>
+    </div>
+
+    <!-- Page Content -->
+    <div class="container py-4">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-warning">{{ messages[0] }}</div>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
+
+<footer class="footer bg-light py-4 mt-5 border-top">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 text-center text-md-start g-4">
+
+            <!-- Branding -->
+            <div class="col">
+                <h5 class="fw-bold">Cooklyst</h5>
+                <p class="text-muted">"Cook smart, eat better — your next favorite recipe starts here."</p>
+            </div>
+
+            <!-- Navigation -->
+            <div class="col">
+                <h5 class="fw-bold">Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{{ url_for('index') }}" class="text-decoration-none text-muted">Home</a></li>
+                    <li><a href="{{ url_for('saved_recipes') }}" class="text-decoration-none text-muted">Saved Recipes</a></li>
+                    <li><a href="{{ url_for('my_recipes') }}" class="text-decoration-none text-muted">My Recipes</a></li>
+                    <li><a href="{{ url_for('my_progress') }}" class="text-decoration-none text-muted">My Progress</a></li>
+                    <li><a href="{{ url_for('help_page') }}" class="text-decoration-none text-muted">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Social Media -->
+            <div class="col">
+                <h5 class="fw-bold">Connect With Us</h5>
+                <ul class="list-unstyled">
+                    <li><a href="https://facebook.com" class="text-decoration-none text-muted" target="_blank">Facebook</a></li>
+                    <li><a href="https://instagram.com" class="text-decoration-none text-muted" target="_blank">Instagram</a></li>
+                    <li><a href="https://linkedin.com" class="text-decoration-none text-muted" target="_blank">LinkedIn</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="col">
+                <h5 class="fw-bold">Contact Us</h5>
+                <ul class="list-unstyled text-muted">
+                    <li>support@cooklyst.com</li>
+                    <li>feedback@cooklyst.com</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="text-center pt-3 mt-4 border-top small text-muted">
+            Created by <span style="color: #f1c40f;">Dev Bajaj</span> | © 2025 All rights reserved
+        </div>
+    </div>
+</footer>
+
+<script>
+    const toggleTheme = () => {
+        const current = document.documentElement.getAttribute('data-theme');
+        const newTheme = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    };
+
+    window.onload = () => {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
+        const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.getElementById('toggleSidebarBtn');
+        const icon = toggleBtn.querySelector('i');
+
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            document.querySelector('.main-content').classList.toggle('sidebar-collapsed');
+            icon.classList.toggle('bi-chevron-left');
+            icon.classList.toggle('bi-chevron-right');
+        });
+    };
+</script>
+
+</body>
+</html>

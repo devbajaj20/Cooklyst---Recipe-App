@@ -1,0 +1,105 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card text-white bg-dark shadow-lg p-4">
+                <h1 class="card-title text-center text-primary fw-bold">{{ recipe.title }}</h1>
+
+                <div class="text-center my-4">
+                    <img src="{{ url_for('static', filename='uploads/' + (recipe.image or 'default.jpg')) }}"
+                         alt="Recipe Image"
+                         class="img-fluid rounded"
+                         style="max-height: 300px; object-fit: cover;">
+                </div>
+
+                <div class="mb-3">
+                    <p><strong class="text-warning">Description:</strong> {{ recipe.description }}</p>
+                    <p><strong class="text-info">Cook Time:</strong> {{ recipe.cook_time }}</p>
+                    <p><strong class="text-info">Serves:</strong> {{ recipe.serves }}</p>
+                </div>
+
+                <h4 class="text-success">🧂 Ingredients</h4>
+                <p>{{ recipe.ingredients }}</p>
+
+                <h4 class="text-success">📝 Instructions</h4>
+                <p style="white-space: pre-line;">{{ recipe.instructions }}</p>
+
+                <a href="{{ url_for('index') }}" class="btn btn-outline-light mt-3">
+                    ← Back to recipes
+                </a>
+
+                <hr class="my-4">
+
+                <h4 class="text-warning">Rating and Comment</h4>
+
+                {% if current_user.is_authenticated %}
+                    <form method="POST"
+                          style="background-color: #1a1a1a; padding: 20px; border-radius: 10px; max-width: 600px;">
+                       <div class="rating">
+  <input type="radio" id="star5" name="rating" value="5" required>
+  <label for="star5">&#9733;</label>
+
+  <input type="radio" id="star4" name="rating" value="4">
+  <label for="star4">&#9733;</label>
+
+  <input type="radio" id="star3" name="rating" value="3">
+  <label for="star3">&#9733;</label>
+
+  <input type="radio" id="star2" name="rating" value="2">
+  <label for="star2">&#9733;</label>
+
+  <input type="radio" id="star1" name="rating" value="1">
+  <label for="star1">&#9733;</label>
+</div>
+
+                        <textarea name="content" placeholder="Add a comment..." rows="3" required
+                                  class="form-control bg-dark text-white mb-3"
+                                  style="border: 1px solid #444;"></textarea>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                {% else %}
+                    <div class="alert alert-warning mt-3">
+                        🔒 You need to <a href="{{ url_for('login') }}" class="text-warning">log in</a> or
+                        <a href="{{ url_for('register') }}" class="text-warning">register</a> to rate or comment.
+                    </div>
+                {% endif %}
+
+                {% if current_user.is_authenticated %}
+                    <form action="{{ url_for('save_recipe', recipe_id=recipe.id) }}" method="POST" class="mt-4">
+                        <button type="submit" class="btn btn-success">💾 Save Recipe</button>
+                    </form>
+
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            <div class="alert alert-success mt-3" role="alert">
+                                {{ messages[0] }}
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                {% endif %}
+
+                <hr class="my-4">
+
+                <h4 class="text-light">💬 Comments</h4>
+                {% if recipe.comments %}
+                    <ul class="list-group bg-dark border-0">
+                        {% for comment in recipe.comments %}
+                            <li class="list-group-item bg-dark text-white border-bottom">
+                                <strong>{{ comment.user.username }}</strong>: {{ comment.content }}
+                                {% if comment.rating %}
+                                    - <span class="text-warning">⭐ {{ comment.rating }}</span>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">No comments yet. Be the first to add one!</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

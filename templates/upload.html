@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container py-4">
+
+    <!-- Top Buttons -->
+
+    <!-- Recipe Upload Form -->
+    <form method="POST" enctype="multipart/form-data">
+        <!-- Recipe Photo -->
+        <div class="mb-4">
+            <label class="form-label fw-semibold">Upload Recipe Photo</label>
+            <input type="file" class="form-control" name="image" required>
+        </div>
+
+        <!-- Title -->
+        <div class="mb-3">
+            <input type="text" name="title" class="form-control form-control-lg" placeholder="Recipe Title" required>
+        </div>
+
+        <!-- Description -->
+        <div class="mb-3">
+            <textarea name="description" class="form-control" rows="3" placeholder="Brief description about your recipe..."></textarea>
+        </div>
+
+        <!-- Cook Time and Serves -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <input type="text" name="cook_time" class="form-control" placeholder="Cook Time (e.g. 45 minutes)">
+            </div>
+            <div class="col-md-6">
+                <input type="text" name="serves" class="form-control" placeholder="Serves (e.g. 2 people)">
+            </div>
+        </div>
+
+        <!-- Ingredients -->
+        <div class="mb-3">
+            <label class="form-label">Ingredients</label>
+            <textarea name="ingredients" class="form-control" rows="5" placeholder="List ingredients, one per line" required></textarea>
+        </div>
+
+        <!-- Instructions -->
+        <div class="mb-3">
+            <label class="form-label">Instructions</label>
+            <textarea name="instructions" class="form-control" rows="6" placeholder="Describe the cooking steps..." required></textarea>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn btn-success">Submit Recipe</button>
+    </form>
+</div>
+{% endblock %}

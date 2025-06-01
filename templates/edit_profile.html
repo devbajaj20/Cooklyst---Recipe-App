@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block title %}Edit Profile - Recipe App{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-9 col-lg-7">
+      <div class="card bg-gradient rounded-4 shadow-lg p-5" style="background: linear-gradient(135deg, #1e2a38, #33475b); border: none;">
+        <h2 class="text-center text-white fw-bold mb-5" style="text-shadow: 0 2px 5px rgba(0,0,0,0.5);">
+          ✏️ Edit Your Profile
+        </h2>
+
+        <form method="POST" action="{{ url_for('edit_profile') }}" enctype="multipart/form-data" novalidate>
+          {{ form.hidden_tag() }}
+
+          <!-- Profile Picture Upload -->
+          <div class="mb-5 text-center">
+            {% set profile_img = current_user.image if current_user.image else 'default.jpg' %}
+            <img src="{{ url_for('static', filename='uploads/' + profile_img) }}" alt="Profile Picture"
+                 class="rounded-circle border border-4 border-info mb-4" style="width: 140px; height: 140px; object-fit: cover; box-shadow: 0 0 15px rgba(0,123,255,0.5);">
+            <label for="profile_picture" class="form-label text-info fw-semibold fs-5 d-block mb-3">
+              Change Profile Picture
+            </label>
+            <input type="file" id="profile_picture" name="profile_picture"
+                   class="form-control form-control-lg bg-transparent text-white border-info mx-auto"
+                   style="max-width: 280px;">
+          </div>
+
+          <!-- Username -->
+          <div class="mb-4">
+            <label for="username" class="form-label text-info fw-semibold fs-5">Username</label>
+            {{ form.username(class="form-control form-control-lg bg-transparent text-white border-info", id="username", placeholder="Enter username") }}
+            {% if form.username.errors %}
+              <div class="text-danger small mt-2">{{ form.username.errors[0] }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Email -->
+          <div class="mb-4">
+            <label for="email" class="form-label text-info fw-semibold fs-5">Email</label>
+            {{ form.email(class="form-control form-control-lg bg-transparent text-white border-info", id="email", placeholder="Enter email") }}
+            {% if form.email.errors %}
+              <div class="text-danger small mt-2">{{ form.email.errors[0] }}</div>
+            {% endif %}
+          </div>
+
+          <!-- About Me -->
+          <div class="mb-5">
+            <label for="about_me" class="form-label text-info fw-semibold fs-5">About You</label>
+            {{ form.about_me(class="form-control form-control-lg bg-transparent text-white border-info", id="about_me", rows="5", placeholder="Tell us a bit about yourself...") }}
+          </div>
+
+          <!-- Submit Button -->
+          <div class="d-grid mb-4">
+            <button type="submit" class="btn btn-info btn-lg fw-bold shadow">
+              💾 Save Changes
+            </button>
+          </div>
+
+          <!-- Back Link -->
+          <div class="text-center">
+            <a href="{{ url_for('profile') }}" class="text-info text-decoration-none fw-semibold fs-5">
+              ← Back to Profile
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <!-- Search Bar -->
+    <form method="POST" class="mb-5 d-flex justify-content-center">
+        <input type="text" name="search" class="form-control me-2 search-input" placeholder="Search recipes..." required>
+        <button type="submit" class="btn btn-warning btn-search">Search</button>
+    </form>
+
+    <h2 class="mb-5 text-center text-info">🍳 Explore Recipes</h2>
+
+    <!-- Cards -->
+    <div class="row">
+        {% for recipe in recipes %}
+        <div class="col-md-6 col-lg-4 mb-4 d-flex align-items-stretch">
+            <div class="card recipe-card shadow-sm">
+
+          <!-- Save Recipe Emoji -->
+<!-- Save Recipe Emoji -->
+<div class="card-img-overlay d-flex justify-content-end">
+    <!-- Wrap the save action in a form with POST method -->
+    <form method="POST" action="{{ url_for('save_recipe', recipe_id=recipe.id) }}" style="background: transparent; border: none;">
+        <button type="submit" class="btn btn-link text-white" style="font-size: 1.5rem; 
+            border: 2px solid #ffffff; border-radius: 8px; padding: 5px 10px; text-decoration: none; outline: none;">
+            📌
+        </button>
+    </form>
+</div>
+
+                {% if recipe.image %}
+                    <img src="{{ url_for('static', filename='uploads/' + recipe.image) }}" class="card-img-top recipe-img" alt="Recipe Image">
+                {% else %}
+                    <img src="{{ url_for('static', filename='default-image.jpg') }}" class="card-img-top recipe-img" alt="Default Image">
+                {% endif %}
+
+                <div class="card-body d-flex flex-column">
+                    <div class="text-center">
+                        <h5 class="card-title fw-bold" style="color: #ffffff;">{{ recipe.title }}</h5>
+                        <p class="text-muted fw-semibold" style="font-size: 0.9rem; color: #ffffff !important;">
+                            By: {{ recipe.user.username }}
+                        </p>
+                    </div>
+                    <br>
+                   <!-- Ensuring the button is clickable -->
+                   <a href="{{ url_for('recipe_detail', recipe_id=recipe.id) }}" class="btn btn-outline-info mt-auto" style="cursor: pointer; z-index: 10;">
+                        View Full Recipe
+                    </a>
+
+                </div> <!-- Close card-body -->
+            </div> <!-- Close card -->
+        </div> <!-- Close col-md-6 -->
+        {% endfor %}
+    </div> <!-- Close row -->
+
+{% endblock %}

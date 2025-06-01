@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}Help & Support - Cooklyst{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div class="container help-container">
+  <div class="text-center mb-5">
+    <h1 class="fw-bold">Help & Support</h1>
+    <h4 class="text-muted">Need help using Cooklyst? We're here for you!</h4>
+
+    <div class="mb-5">
+      <h3>📨 Contact Us</h3>
+      <h5 class="text-muted">
+        Still need help? Fill out the form below or email
+        <a href="mailto:support@cooklyst.com">support@cooklyst.com</a>.
+      </h5>
+    </div>
+
+    {% if message %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+
+    <div class="help-card">
+      <form method="POST" action="{{ url_for('help_page') }}">
+        <div class="mb-3">
+          <label for="name" class="form-label">Your Name</label>
+          <input type="text" id="name" name="name" required autocomplete="name" />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Your Email</label>
+          <input type="email" id="email" name="email" required autocomplete="email" />
+        </div>
+        <div class="mb-3">
+          <label for="message" class="form-label">Message</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

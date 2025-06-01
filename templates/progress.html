@@ -1,0 +1,128 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">📈 My Progress</h2>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Saves</h5>
+                    <p class="card-text display-4">{{ total_saves }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Comments</h5>
+                    <p class="card-text display-4">{{ total_comments }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h4 class="mt-5">Comments on Your Recipes</h4>
+    <ul class="list-group">
+        {% for comment in comments %}
+            <li class="list-group-item">
+                {{ comment.content }}
+            </li>
+        {% else %}
+            <li class="list-group-item text-muted">No comments yet.</li>
+        {% endfor %}
+    </ul>
+<h4 class="mt-5">🥧 Saved Recipes Distribution</h4>
+
+<!-- Chart Type Toggle Buttons for Saves -->
+<div class="mb-3">
+    <button class="btn btn-outline-primary btn-sm me-2" onclick="changeChartType('saves', 'pie')">Pie</button>
+    <button class="btn btn-outline-secondary btn-sm me-2" onclick="changeChartType('saves', 'bar')">Bar</button>
+    <button class="btn btn-outline-success btn-sm" onclick="changeChartType('saves', 'line')">Line</button>
+</div>
+<div style="width: 400px; height: 400px; margin-bottom: 40px;">
+    <canvas id="savesChart"></canvas>
+</div>
+
+<h4>🗨️ Comments Distribution</h4>
+
+<!-- Chart Type Toggle Buttons for Comments -->
+<div class="mb-3">
+    <button class="btn btn-outline-primary btn-sm me-2" onclick="changeChartType('comments', 'pie')">Pie</button>
+    <button class="btn btn-outline-secondary btn-sm me-2" onclick="changeChartType('comments', 'bar')">Bar</button>
+    <button class="btn btn-outline-success btn-sm" onclick="changeChartType('comments', 'line')">Line</button>
+</div>
+<div style="width: 400px; height: 400px; margin-bottom: 60px;">
+    <canvas id="commentsChart"></canvas>
+</div>
+
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const savesData = {{ saves_pie_data | tojson | safe }};
+    const commentsData = {{ comments_pie_data | tojson | safe }};
+
+    let savesChartType = 'pie';
+    let commentsChartType = 'pie';
+
+    const savesCtx = document.getElementById('savesChart').getContext('2d');
+    const commentsCtx = document.getElementById('commentsChart').getContext('2d');
+
+    let savesChart = createChart(savesCtx, savesChartType, savesData.labels, savesData.values, 'Recipe Saves');
+    let commentsChart = createChart(commentsCtx, commentsChartType, commentsData.labels, commentsData.values, 'Recipe Comments');
+
+    function createChart(ctx, type, labels, values, label) {
+        return new Chart(ctx, {
+            type: type,
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: label,
+                    data: values,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)'
+                    ],
+                    borderColor: 'rgba(0, 0, 0, 0.1)',
+                    borderWidth: 1,
+                    fill: type === 'line' ? false : true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: type === 'pie' ? 'right' : 'top'
+                    }
+                },
+                scales: (type === 'pie') ? {} : {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    window.changeChartType = function (chartId, newType) {
+        if (chartId === 'saves') {
+            savesChart.destroy();
+            savesChart = createChart(savesCtx, newType, savesData.labels, savesData.values, 'Recipe Saves');
+            savesChartType = newType;
+        } else if (chartId === 'comments') {
+            commentsChart.destroy();
+            commentsChart = createChart(commentsCtx, newType, commentsData.labels, commentsData.values, 'Recipe Comments');
+            commentsChartType = newType;
+        }
+    };
+});
+</script>
+</div>
+{% endblock %}
