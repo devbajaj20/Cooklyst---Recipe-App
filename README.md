@@ -47,14 +47,25 @@ Cooklyst is a modern web application for sharing and discovering recipes, built 
   <img src="static/uploads/homepage.png" alt="Home Page" width="600px"/>
 </div>
 
-### Recipe Details
+### My Recipes Page
 <div align="center">
-  <img src="static/uploads/recipe-details.png" alt="Recipe Details" width="600px"/>
+  <img src="static/uploads/myrecipespage.png" alt="My Recipes Page" width="600px"/>
+</div>
+
+### Progress Tracking
+<div align="center">
+  <img src="static/uploads/myprogresspage1.png" alt="Progress Page 1" width="600px"/>
+  <img src="static/uploads/myprogresspage2.png" alt="Progress Page 2" width="600px"/>
 </div>
 
 ### User Profile
 <div align="center">
-  <img src="static/uploads/profile-screenshot.png" alt="User Profile" width="600px"/>
+  <img src="static/uploads/profilepage.png" alt="User Profile" width="600px"/>
+</div>
+
+### Help and Support
+<div align="center">
+  <img src="static/uploads/helpandsupportpage.png" alt="Help and Support" width="600px"/>
 </div>
 
 ## 🚀 Getting Started
