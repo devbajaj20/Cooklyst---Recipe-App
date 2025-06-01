@@ -156,12 +156,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Contact
 
-Divya Bajaj - [@devbajaj20](https://github.com/devbajaj20)
-
 Project Link: [https://github.com/devbajaj20/Cooklyst---Recipe-App](https://github.com/devbajaj20/Cooklyst---Recipe-App)
 
 ---
 
-<div align="center">
-  <sub>Built with ❤️ by Divya Bajaj</sub>
-</div>
